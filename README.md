@@ -72,7 +72,7 @@
   - 指定target、分支、渠道等
 
     ```
-    sh nnpack.sh -t App -b dev -c Release -p xxx/xxx.plist -m 这个是tips信息 -s
+    sh nnpack.sh -t App -b dev -d pgyer -c Release -p xxx/xxx.plist -m 这个是tips信息 -s
     ```
 
 
