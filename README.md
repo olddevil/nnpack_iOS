@@ -66,7 +66,7 @@
   - 指定分支、钉钉tips
 
     ```
-    sh nnpack.sh -t AppTest -m tips
+    sh nnpack.sh -b dev -m tips
     ```
 
   - 指定target、分支、渠道等
