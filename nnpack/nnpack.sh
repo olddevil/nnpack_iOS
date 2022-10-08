@@ -44,7 +44,7 @@ apple_upload_log="${export_path}/log/apple_upload_log.json"
 pgyer_upload_json="${export_path}/log/pgyer_upload.json"
 
 function clean() {
-    if [ -e ${export_path} ]; then
+    if [[ -e ${export_path} ]]; then
         rm -rf $export_path
     fi
 }
@@ -53,7 +53,7 @@ function to_apple() {
     echo "\033[32m正在校验包\033[0m"
     xcrun altool --validate-app -f ${export_ipa_path} -t ios --apiKey ${appstore_key} --apiIssuer ${api_issuer} > $apple_validate_log 2>&1
     validate_res=`grep "No errors validating archive at" $apple_validate_log`
-    if [ -z $validate_res ]; then
+    if [[ -z $validate_res ]]; then
         echo "\033[31m包校验失败, 错误日志路径: $apple_validate_log\033[0m"
         open $apple_validate_log
         exit 1
@@ -63,7 +63,7 @@ function to_apple() {
     echo "\033[32m正在上传到appstore connect\033[0m"
     xcrun altool --upload-app -f ${export_ipa_path} -t ios --apiKey ${appstore_key} --apiIssuer ${api_issuer} --verbose --output-format xml > $apple_upload_log 2>&1
     upload_res=`grep "No errors uploading" $apple_upload_log`
-    if [ -z $upload_res ]; then
+    if [[ -z $upload_res ]]; then
         echo "\033[31m上传到appstore connect失败, 错误日志路径: $apple_upload_log\033[0m"
         open $apple_upload_log
         exit 1
@@ -77,7 +77,7 @@ function to_apple() {
 }
 
 function to_dingding() {
-    if [ -z $dingding_access_token ]; then
+    if [[ -z $dingding_access_token ]]; then
         echo "\033[31m分发已成功\033[0m"
         echo "\033[31m暂时无法发送到钉钉群\033[0m"
         echo "\033[31m如想使用此功能,请先配置钉钉access_token\033[0m"
@@ -165,7 +165,7 @@ function export_ipa() {
         pack_branch=$current_branch
     fi
     # workspace/xcodeproj, 通过文件类型确定build_type
-    if [ -e "${project_path}/${project_name}.xcworkspace" ];then
+    if [[ -e "${project_path}/${project_name}.xcworkspace" ]];then
         build_file_path="${project_path}/${project_name}.xcworkspace"
         build_type="workspace"
     else
@@ -182,7 +182,7 @@ function export_ipa() {
     echo "\033[32m清理完成\033[0m"
     echo "\033[32m正在编译工程:${build_file_path}\033[0m"
    
-    if [ -d ${build_file_path} ];then
+    if [[ -d ${build_file_path} ]];then
         xcodebuild archive -${build_type} ${build_file_path} \
         -scheme ${target} \
         -configuration ${configuration} \
@@ -192,7 +192,7 @@ function export_ipa() {
         echo "\033[31mworkspace 不存在\033[0m"
     fi
 
-    if [ -d ${archive_path} ] ; then
+    if [[ -d ${archive_path} ]] ; then
         echo "\033[32m项目编译成功\033[0m"
     else
         echo "\033[31m项目编译失败, 错误日志路径: $apple_archive_log\033[0m"
@@ -207,7 +207,7 @@ function export_ipa() {
     -exportOptionsPlist ${plist_path} > $apple_export_log 2>&1 \
     -quiet || exit
 
-    if [ -e ${export_ipa_path} ]; then
+    if [[ -e ${export_ipa_path} ]]; then
         echo "\033[32mipa包导出成功\033[0m"
         if [[ $channel == "apple" ]]; then
             to_apple
@@ -233,20 +233,20 @@ function check_configure() {
     fi
 
     if [[ $channel == "apple" ]]; then
-        if [ -z $appstore_key ]; then
+        if [[ -z $appstore_key ]]; then
             echo "\033[31m请先配置appstore_key\033[0m"
             echo "\033[31m获取地址: https://appstoreconnect.apple.com/access/api\033[0m"
             $(open 'https://appstoreconnect.apple.com/access/api')
             exit 1
         fi
-        if [ -z $api_issuer ]; then
+        if [[ -z $api_issuer ]]; then
             echo "\033[31m请先配置apiIssuer\033[0m"
             echo "\033[31m获取地址: https://appstoreconnect.apple.com/access/api\033[0m"
             $(open 'https://appstoreconnect.apple.com/access/api')
             exit 1
         fi
     else
-        if [ -z $pgyer_api_key ]; then
+        if [[ -z $pgyer_api_key ]]; then
             echo "\033[31m请先配置pgyer_api_key\033[0m"
             echo "\033[31m文档地址: https://www.pgyer.com/doc/view/api#uploadApp\033[0m"
             $(open 'https://www.pgyer.com/doc/view/api#uploadApp')
