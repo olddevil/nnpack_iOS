@@ -204,6 +204,7 @@ function export_ipa() {
     xcodebuild -exportArchive -archivePath ${archive_path} \
     -configuration ${configuration} \
     -exportPath ${export_ipa_library_path} \
+    -allowProvisioningUpdates YES\
     -exportOptionsPlist ${plist_path} > $apple_export_log 2>&1 \
     -quiet || exit
 
