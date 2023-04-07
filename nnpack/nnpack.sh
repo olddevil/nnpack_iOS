@@ -11,7 +11,7 @@ fi
 
 cd $project_path >> /dev/null 2>&1
 
-project_name=`find . -name *.xcodeproj | awk -F "[/.]" '{print $(NF-1)}'`
+project_name=`find . -maxdepth 1 -name *.xcodeproj | awk -F "[/.]" '{print $(NF-1)}'`
 if [[ -z $project_name ]]; then
     echo "\033[31m请在nnconfig.sh文件中配置正确项目路径\033[0m"
     exit 1
