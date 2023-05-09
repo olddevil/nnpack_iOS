@@ -17,10 +17,14 @@
 - adHocExportOptions.plist：ad-hoc包所需的plist文件
 - distributionExportOptions.plist：appstore包所需的plist文件
 
-**tips：打包时指定的plist路径一定要对应想要的分发渠道，脚本附带的plist文件是模版，部分内容需要自己填写，也可手动打包一次，在导出的.ipa文件夹内获取ExportOptions.plist文件**
+**tips：** 
+- **打包时指定的plist路径一定要对应想要的分发渠道，脚本附带的plist文件是模版，部分内容需要自己填写，也可手动打包一次，在导出的.ipa文件夹内获取ExportOptions.plist文件**
 
 
-**notice: 项目如果有混编Flutter，请确保偏好设置->隐私与安全性->安全性中允许任何来源，如没有此选项，可终端执行`sudo spctl --master-disable`**
+- **项目如果有混编Flutter，请确保偏好设置->隐私与安全性->安全性中允许任何来源，如没有此选项，可终端执行`sudo spctl --master-disable`**
+
+
+- **如果项目打包并上传蒲公英成功，但是钉钉消息内容有缺失，请适当延长`to_pgyer`方法中`sleep`函数后面的时间**
 
 
 ## 使用前提
